@@ -1,10 +1,9 @@
 import os
-import google.generativeai as genai
+from google import genai
 
 
 def generate(content, deck_name, count=20):
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
     prompt = f"""You are an expert at creating Anki flashcards for studying technical content.
 
@@ -22,7 +21,7 @@ Content:
 
 Generate exactly {count} flashcards now:"""
 
-    response = model.generate_content(prompt)
+    response = client.models.generate_content(model="gemini-2.0-flash", contents=prompt)
 
     flashcards = []
     for line in response.text.strip().splitlines():
