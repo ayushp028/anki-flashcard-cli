@@ -1,13 +1,9 @@
 import os
-from dotenv import load_dotenv
 import google.generativeai as genai
-
-# Load the API key from the .env file
-load_dotenv()
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 def generate(content, deck_name, count=20):
+    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
     model = genai.GenerativeModel("gemini-1.5-flash")
 
     prompt = f"""You are an expert at creating Anki flashcards for studying technical content.
